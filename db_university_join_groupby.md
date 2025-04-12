@@ -53,14 +53,29 @@ WHERE departments.name = 'Dipartimento di Matematica'
 GROUP BY
 1. Contare quanti iscritti ci sono stati ogni anno
 
-
+SELECT year(enrolment_date), COUNT(*) AS total_students
+FROM `students`
+GROUP BY year(enrolment_date)
+ORDER BY year(enrolment_date) ASC
 
 2. Contare gli insegnanti che hanno l'ufficio nello stesso edificio
 
-
+SELECT office_address, COUNT(*) AS number_of_teachers
+FROM `teachers`
+GROUP BY office_address
+ORDER BY number_of_teachers DESC
 
 3. Calcolare la media dei voti di ogni appello d'esame
 
-
+SELECT exams.course_id, AVG(exam_student.vote) AS average_vote
+FROM `exams`
+JOIN exam_student ON exam_student.exam_id = exams.id
+GROUP BY exams.course_id
 
 4. Contare quanti corsi di laurea ci sono per ogni dipartimento
+
+SELECT departments.name, COUNT(department_id) AS courses_for_department
+FROM degrees
+JOIN departments ON degrees.department_id = departments.id
+GROUP BY departments.name
+
